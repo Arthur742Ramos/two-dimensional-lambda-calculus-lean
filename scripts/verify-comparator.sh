@@ -85,5 +85,5 @@ cd "$repository_root"
 PALOMAR_LANDRUN_BIN="$bin_dir/landrun" \
 COMPARATOR_LEAN4EXPORT="$lean4export_dir/.lake/build/bin/lean4export" \
 COMPARATOR_NANODA="$nanoda_dir/target/release/nanoda_bin" \
-COMPARATOR_LANDRUN="$repository_root/scripts/landrun-wrapper.sh" \
+COMPARATOR_LANDRUN="$bin_dir/landrun" \
   lake env "$comparator_dir/.lake/build/bin/comparator" comparator.json
