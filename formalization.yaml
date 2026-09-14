@@ -2,16 +2,18 @@
 version: "v0.4"
 
 project:
-  name: "Parity and beta-eta separation in a typed two-dimensional lambda calculus"
+  name: "Certified naturality, transport, and non-collapse in a typed two-dimensional lambda calculus"
   description: >-
-    A Lean 4 formalization of labelled conversion evidence and the complete
-    declared family of two-dimensional cell generators from A Theory of a
-    Two-Dimensional Typed Lambda Calculus. A Boolean structural parity is
-    proved invariant under every generating and composite two-cell and under
-    finite cell sequences. It follows that beta contraction and eta contraction
-    inside an application context remain distinct evidence with the same
-    endpoints, and that the resulting beta-eta loop is not connected to the
-    empty path.
+    A Lean 4 formalization of labelled conversion evidence and the declared
+    two-dimensional cell generators from A Theory of a Two-Dimensional Typed
+    Lambda Calculus. A structural-recursive evaluator for a seven-constructor
+    language of presented homotopies computes pointwise evidence together with
+    naturality certificates; finite presentations have direct naturality, and
+    conjugation transport respects two-paths and reconstructs the same square.
+    An explicit semantic family proves that presented homotopies form a proper
+    subclass of pointwise families. Separately, Boolean parity is invariant
+    under every cell and separates beta from eta evidence with common endpoints,
+    yielding a nontrivial beta-eta loop.
   authors:
     - "Arthur F. Ramos"
   license: "Apache-2.0"
@@ -31,25 +33,35 @@ sources:
     type: "paper"
     relationship: "formalizes"
     note: >-
-      The Lean development formalizes the labelled steps, paths, complete
-      declared Step2 generator set, parity-preservation theorem, beta-eta
-      separation, and nontrivial-loop consequence from the manuscript dated
-      13 September 2026.
+      The Lean development formalizes the labelled steps, paths, declared Step2
+      generator set, canonical evaluator and its equations, certified naturality,
+      one-presentation transport and recovery, a proper-subclass obstruction,
+      parity preservation, beta-eta separation, and the nontrivial-loop
+      consequence from the manuscript dated 13 September 2026.
     license: "unknown"
     author_endorsement: "participated"
 
 status:
   scope: >-
-    Formalizes Definitions 2.1, 2.2, and 3.1, Theorem 7.3, Corollary 7.5,
-    and its nontrivial-loop consequence. It does not yet port the path-algebra,
-    certified-naturality, or transport constructions of Sections 4 through 6;
-    the refutation of unrestricted naturality; a standalone lambda syntax;
+    Formalizes Definitions 2.1, 2.2, 3.1, 5.1, 5.2, 5.5, and 6.3; Theorems
+    5.3 and 6.2; one-presentation instances of Proposition 6.4 and Theorems
+    6.6 through 6.8; Theorem 7.3; Corollary 7.5; and its nontrivial-loop
+    consequence. It does not claim the manuscript's unrestricted-naturality
+    refutation, recursive transport along arbitrary function-space
+    presentations, a standalone lambda syntax;
     normalization or completeness; a semantic higher-lambda-model
     interpretation; an infinity-groupoid; or a fundamental-group calculation.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: ["propext"]
   main_results:
+    - "TDLC.evalHomotopyStepI"
+    - "TDLC.certifiedStepNaturality"
+    - "TDLC.certifiedPathNaturality"
+    - "TDLC.transportAlongPresentedRespects"
+    - "TDLC.certifiedTransport"
+    - "TDLC.certifiedNaturalityViaTransport"
+    - "TDLC.semanticFamilyNotPresented"
     - "TDLC.step2PreservesParity"
     - "TDLC.path2PreservesParity"
     - "TDLC.betaEtaSeparated"
@@ -62,8 +74,8 @@ automation:
       framework: "OpenAI Codex"
       tool_setup: >-
         The agent translated the manuscript definitions into Lean, developed
-        the structural-induction proofs, prepared the Palomar boundary, and
-        ran local verification under human direction.
+        the structural-recursion proofs and certificate constructions, prepared
+        the Palomar boundary, and ran local verification under human direction.
       cost:
         wall_time: "one interactive development session"
         spend_usd: "subscription-based"
@@ -82,7 +94,13 @@ fidelity:
     and places inspectable evidence one universe higher. As in the manuscript's
     Idris host encoding, beta and eta make endpoint expressions definitionally
     equal in the host theory while preserving their constructor tags as data.
-    No claim outside the stated scope is represented as a Lean theorem.
+    The paper's asserted Idris refutation of unrestricted semantic naturality
+    was not reconstructed from the PDF alone and is not claimed here. Instead,
+    Lean proves the independently checkable proper-subclass obstruction using
+    the evaluator's outer-constructor invariant. Transport is currently stated
+    for one canonically evaluated step presentation, while direct naturality
+    covers finite global presentations. No claim outside the stated scope is
+    represented as a Lean theorem.
 
 review:
   status: "agent-reviewed"
@@ -90,9 +108,10 @@ review:
     - "OpenAI Codex"
   notes: >-
     The agent audited every Step2 constructor against Definition 3.1, checked
-    parity preservation case by case, kept the Palomar Challenge independent
-    of candidate-local imports, and ran the repository verification scripts.
-    Lean's #print axioms reports no axioms for the four selected declarations;
+    every evaluator branch and transport boundary, checked parity preservation
+    case by case, kept the Palomar Challenge independent of candidate-local
+    imports, and ran the repository verification scripts.
+    Lean's #print axioms reports no axioms for every selected declaration;
     the Comparator export configuration permits propext because the exported
     Lean environment declares it and NanoDa requires that declaration to be
     allowlisted.
@@ -100,6 +119,42 @@ review:
 alignment:
   namespace: "TDLC"
   statements:
+    - source: "Theorem 5.3, canonical certified evaluation"
+      lean: "TDLC.evalHomotopyStepI"
+      module: "Solution"
+      status: "proved"
+      note: >-
+        A computable definition covering all seven presentation constructors;
+        seven separately compared equations expose the computed family.
+    - source: "Corollary 5.4, naturality of evaluated step homotopies"
+      lean: "TDLC.certifiedStepNaturality"
+      module: "Solution"
+      status: "proved"
+      note: "Projects the naturality witness constructed by the canonical evaluator."
+    - source: "Theorem 6.2, direct naturality for finite presentations"
+      lean: "TDLC.certifiedPathNaturality"
+      module: "Solution"
+      status: "proved"
+      note: "Produces an explicit Path2 witness for every HomotopyPathI presentation."
+    - source: "Proposition 6.4, transport respects two-paths"
+      lean: "TDLC.transportAlongPresentedRespects"
+      module: "Solution"
+      status: "proved"
+      note: "The recorded theorem is the one-presented-step conjugation instance."
+    - source: "Theorems 6.6 through 6.8, transport and recovery"
+      lean: "TDLC.certifiedNaturalityViaTransport"
+      module: "Solution"
+      status: "proved"
+      note: >-
+        Conjugation transport maps source congruence to target congruence and
+        recovers the naturality boundary for one canonical step presentation.
+    - source: "Definition 5.1, presented versus semantic homotopies"
+      lean: "TDLC.semanticFamilyNotPresented"
+      module: "Solution"
+      status: "proved"
+      note: >-
+        An explicit Bool-indexed family varies its outer evidence constructor,
+        whereas every canonical global presentation is uniform at that level.
     - source: "Theorem 7.3, preservation by all 2-cells"
       lean: "TDLC.step2PreservesParity"
       module: "Solution"

@@ -43,8 +43,8 @@ if [ "$challenge_lines" -gt 1000 ] || [ "$challenge_bytes" -gt 102400 ]; then
 fi
 
 challenge_holes=$(rg -c '^[[:space:]]*sorry[[:space:]]*$' Challenge.lean || true)
-if [ "$challenge_holes" -ne 4 ]; then
-  echo "Challenge.lean must contain exactly four deliberate theorem holes" >&2
+if [ "$challenge_holes" -ne 23 ]; then
+  echo "Challenge.lean must contain exactly 23 deliberate declaration holes" >&2
   exit 1
 fi
 
@@ -62,12 +62,32 @@ assert config == {
     "challenge_module": "Challenge",
     "solution_module": "Solution",
     "theorem_names": [
+        "TDLC.evalHomotopyStepI_refl",
+        "TDLC.evalHomotopyStepI_beta",
+        "TDLC.evalHomotopyStepI_eta",
+        "TDLC.evalHomotopyStepI_apCong",
+        "TDLC.evalHomotopyStepI_sym",
+        "TDLC.evalHomotopyStepI_trans",
+        "TDLC.evalHomotopyStepI_lamCong",
+        "TDLC.evalHomotopyPathI_nil",
+        "TDLC.evalHomotopyPathI_seq",
+        "TDLC.evaluatedHeadTagConstant",
+        "TDLC.semanticFamilyNotPresented",
         "TDLC.step2PreservesParity",
         "TDLC.path2PreservesParity",
         "TDLC.betaEtaSeparated",
         "TDLC.betaEtaLoopNontrivial",
     ],
-    "definition_names": [],
+    "definition_names": [
+        "TDLC.evalHomotopyStepI",
+        "TDLC.certifiedStepNaturality",
+        "TDLC.evalHomotopyPathI",
+        "TDLC.certifiedPathNaturality",
+        "TDLC.transportAlongPresentedRespects",
+        "TDLC.certifiedTransport",
+        "TDLC.recoverNaturalityFromTransport",
+        "TDLC.certifiedNaturalityViaTransport",
+    ],
     "permitted_axioms": ["propext"],
     "enable_nanoda": True,
 }

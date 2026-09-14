@@ -1,5 +1,24 @@
 import Solution
 
+#print axioms TDLC.evalHomotopyStepI
+#print axioms TDLC.evalHomotopyStepI_refl
+#print axioms TDLC.evalHomotopyStepI_beta
+#print axioms TDLC.evalHomotopyStepI_eta
+#print axioms TDLC.evalHomotopyStepI_apCong
+#print axioms TDLC.evalHomotopyStepI_sym
+#print axioms TDLC.evalHomotopyStepI_trans
+#print axioms TDLC.evalHomotopyStepI_lamCong
+#print axioms TDLC.certifiedStepNaturality
+#print axioms TDLC.evalHomotopyPathI
+#print axioms TDLC.evalHomotopyPathI_nil
+#print axioms TDLC.evalHomotopyPathI_seq
+#print axioms TDLC.certifiedPathNaturality
+#print axioms TDLC.transportAlongPresentedRespects
+#print axioms TDLC.certifiedTransport
+#print axioms TDLC.recoverNaturalityFromTransport
+#print axioms TDLC.certifiedNaturalityViaTransport
+#print axioms TDLC.evaluatedHeadTagConstant
+#print axioms TDLC.semanticFamilyNotPresented
 #print axioms TDLC.Path.parity_lEmbed
 #print axioms TDLC.Path.parity_concat
 #print axioms TDLC.Path.parity_inv
