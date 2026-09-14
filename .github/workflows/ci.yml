@@ -44,3 +44,4 @@ jobs:
           cache: false
       - run: ./scripts/verify-comparator.sh
       - run: ./scripts/verify-comparator.sh extensions-comparator.json
+      - run: ./scripts/verify-comparator.sh submission-comparator.json

@@ -1,5 +1,12 @@
 # Two-dimensional typed lambda calculus in Lean
 
+**Submission package:** use `submission-comparator.json`, with
+`SubmissionChallenge.lean` and solution module `Extensions`. This single
+configuration records the positive naturality/transport results together with
+the unrestricted-naturality obstruction and supporting syntax/non-collapse
+results. The two smaller configurations are regression subsets; they are not
+separate proposed registrations. See [SUBMISSION.md](SUBMISSION.md).
+
 This repository formalizes the constructive core and non-collapse result from Daniel O.
 Martínez-Rivillas, Arthur F. Ramos, and Ruy J. G. B. de Queiroz's manuscript
 *A Theory of a Two-Dimensional Typed Lambda Calculus*.
@@ -92,6 +99,7 @@ The project has no external Lean dependencies and is pinned to Lean 4.28.0.
 ```console
 lake build
 ./scripts/check.sh
+./scripts/verify-comparator.sh submission-comparator.json
 ```
 
 The Palomar surface is deliberately small:
@@ -121,6 +129,18 @@ replay. CI runs both configurations. The extension audit separately checks the
 not describe them as axiom-free.
 
 Palomar submissions go through <https://submit.palomar-registry.org/>.
+
+### Why this is a research result
+
+The question is whether retaining beta/eta conversion evidence and the declared
+two-dimensional coherence laws forces every pointwise homotopy to be natural.
+The formal answer is negative, while a specified inductive presentation language
+does support constructive naturality and transport. The obstruction uses the full
+pre-existing cell signature, not a reduced signature chosen for the counterexample.
+This distinction is relevant to researchers in type theory, proof-relevant
+conversion, and categorical semantics: arbitrary semantic families cannot replace
+certified presentations without an additional coherence assumption or a change
+to the calculus. No claim of priority over the manuscript is made.
 
 ## Trust boundary
 

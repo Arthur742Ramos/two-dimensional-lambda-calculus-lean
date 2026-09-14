@@ -2,21 +2,22 @@
 version: "v0.4"
 
 project:
-  name: "Certified naturality, transport, and non-collapse in a typed two-dimensional lambda calculus"
+  name: "Certified naturality and the obstruction to unrestricted naturality in a typed two-dimensional calculus"
   description: >-
-    A Lean 4 formalization of labelled conversion evidence and the declared
-    two-dimensional cell generators from A Theory of a Two-Dimensional Typed
-    Lambda Calculus. A structural-recursive evaluator for a seven-constructor
-    language of presented homotopies computes pointwise evidence together with
-    naturality certificates; finite presentations have direct naturality, and
-    conjugation transport respects two-paths and reconstructs the same square.
-    An explicit semantic family proves that presented homotopies form a proper
-    subclass of pointwise families. Separately, Boolean parity is invariant
-    under every cell and separates beta from eta evidence with common endpoints,
-    yielding a nontrivial beta-eta loop.
-    Extensions add standalone typed de Bruijn syntax with representation
-    adequacy and a parity-preserving evidence interpretation, and an independent
-    classical refutation of unrestricted naturality by a dihedral-group invariant.
+    We formalize the boundary of naturality in the labelled conversion calculus
+    of A Theory of a Two-Dimensional Typed Lambda Calculus. Canonical evaluation
+    of inductively presented homotopies constructs naturality squares, and
+    transport along finite presentations preserves two-paths and recovers the
+    naturality boundary. In contrast, an explicit pointwise family on Fin 3
+    admits no naturality two-cell or finite pasting: a six-element dihedral-group
+    invariant separates its two boundary paths while respecting every declared
+    two-cell generator. This independently reconstructed refutation is classical,
+    not a verification of the manuscript's claimed constructive Idris proof.
+    Supporting results distinguish beta and eta evidence by parity and give a
+    standalone typed de Bruijn syntax with exact raw-tree representation adequacy
+    and a parity-preserving conversion interpretation. The result concerns this
+    declared evidence calculus, not normalization, full abstraction, or a
+    completeness theorem for lambda calculus.
   authors:
     - "Arthur F. Ramos"
   license: "Apache-2.0"
@@ -41,6 +42,11 @@ sources:
       finite-presentation transport and recovery, a proper-subclass obstruction,
       parity preservation, beta-eta separation, and the nontrivial-loop
       consequence from the manuscript dated 13 September 2026.
+      The source is a manuscript supplied by coauthor Arthur F. Ramos;
+      no public identifier was supplied. The Section 5 nonexistence result is
+      independently re-proved classically in Lean, not ported from the unavailable
+      Idris refutation sources. The standalone syntax is an additional formal
+      development, not a claim of a new general adequacy theorem in the literature.
     license: "unknown"
     author_endorsement: "participated"
 
@@ -139,6 +145,9 @@ review:
     The 17 extension declarations are audited separately against exactly the
     standard propext, Quot.sound, and Classical.choice allowlist. Independent
     Comparator/NanoDa configurations preserve this distinction.
+    submission-comparator.json selects the union of the core and extension
+    declarations as one coherent statement of record. The other two configurations
+    remain regression subsets, not additional proposed registrations.
 
 alignment:
   namespace: "TDLC"
