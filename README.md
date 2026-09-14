@@ -59,7 +59,7 @@ proof or source; this repository therefore records only the narrower statement
 that has been independently reconstructed and checked in Lean: presented
 homotopies are a proper subclass of semantic pointwise families.
 
-In particular, `mixedUnitFamily` is not a counterexample to naturality: its
+In particular, `mixedUnitFamily` is not established as a counterexample to naturality: its
 failure to have a global presentation does not establish the absence of a
 two-cell. The stronger refutation remains an open reconstruction task here.
 Object terms are Lean values and functions, with beta/eta endpoints already
