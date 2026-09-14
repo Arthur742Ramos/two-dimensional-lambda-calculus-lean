@@ -48,7 +48,7 @@ status:
     interpretation; an infinity-groupoid; or a fundamental-group calculation.
   sorry_count: 0
   sorry_in_definitions: 0
-  axioms: []
+  axioms: ["propext"]
   main_results:
     - "TDLC.step2PreservesParity"
     - "TDLC.path2PreservesParity"
@@ -92,6 +92,10 @@ review:
     The agent audited every Step2 constructor against Definition 3.1, checked
     parity preservation case by case, kept the Palomar Challenge independent
     of candidate-local imports, and ran the repository verification scripts.
+    Lean's #print axioms reports no axioms for the four selected declarations;
+    the Comparator export configuration permits propext because the exported
+    Lean environment declares it and NanoDa requires that declaration to be
+    allowlisted.
 
 alignment:
   namespace: "TDLC"

@@ -68,7 +68,7 @@ assert config == {
         "TDLC.betaEtaLoopNontrivial",
     ],
     "definition_names": [],
-    "permitted_axioms": [],
+    "permitted_axioms": ["propext"],
     "enable_nanoda": True,
 }
 assert Path("formalization.yaml").is_file()

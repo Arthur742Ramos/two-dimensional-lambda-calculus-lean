@@ -46,8 +46,13 @@ The Palomar surface is deliberately small:
 
 - `Challenge.lean` states the calculus and the four recorded results.
 - `Solution.lean` supplies proofs by structural induction.
-- `comparator.json` selects those declarations and permits no axioms.
+- `comparator.json` selects those declarations and permits only `propext`.
 - `formalization.yaml` records provenance, scope, fidelity, and automation.
+
+Lean's `#print axioms` reports no axiom dependencies for the four selected
+proofs. The Comparator configuration nevertheless allowlists `propext` because
+the exported Lean environment declares it and NanoDa requires every exported
+axiom declaration to be permitted.
 
 The complete Comparator and NanoDa replay is available through
 `./scripts/verify-comparator.sh`; it provisions exact pinned verifier revisions
