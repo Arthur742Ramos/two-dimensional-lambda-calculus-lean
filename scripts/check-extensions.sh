@@ -16,6 +16,8 @@ while IFS= read -r dependency; do
   esac
 done <<< "$dependencies"
 
+lake env lean --run scripts/CompareDeclarations.lean extensions-comparator.json
+
 report=$(lake env lean scripts/ExtensionAxiomAudit.lean)
 printf '%s\n' "$report"
 EXTENSION_AXIOM_REPORT="$report" python3 - <<'PY'
@@ -40,6 +42,8 @@ assert config["enable_nanoda"] is True
 assert set(config["permitted_axioms"]) == allowed
 assert len(config["theorem_names"]) == 16
 assert config["definition_names"] == ["TDLC.Syntax.interpret"]
+audited = {re.match(r"'([^']+)'", line)[1] for line in lines}
+assert set(config["theorem_names"] + config["definition_names"]) == audited
 src = Path("ExtensionChallenge.lean").read_text()
 assert len(src.splitlines()) <= 1000
 assert len(src.encode()) <= 102400

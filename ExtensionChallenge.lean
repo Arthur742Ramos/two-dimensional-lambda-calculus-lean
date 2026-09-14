@@ -108,6 +108,20 @@ inductive Path2 {A : Type u} {x y : A} : (p q : Path x y) → Type (u + 1) where
   | nil2 (p : Path x y) : Path2 p p
   | seq2 {p q r : Path x y} : Step2 p q → Path2 q r → Path2 p r
 
+namespace Step
+
+/-- The outer constructor of a step. -/
+def headTag {A : Type u} {x y : A} : Step x y → Nat
+  | @TDLC.Step.beta _ _ f a => 0
+  | @TDLC.Step.eta _ _ f => 1
+  | @TDLC.Step.apCong _ _ f _ _ s => 2
+  | @TDLC.Step.lamCong _ _ f g h => 3
+  | @TDLC.Step.refl _ x => 4
+  | @TDLC.Step.sym _ _ _ s => 5
+  | @TDLC.Step.trans _ _ _ _ s t => 6
+
+end Step
+
 /-- Boolean exclusive-or, used as addition in the two-element grading. -/
 def bxor : Bool → Bool → Bool
   | false, b => b
