@@ -6,6 +6,7 @@ cd "$repository_root"
 
 lake build
 lake env lean scripts/TransportTests.lean
+bash scripts/check-extensions.sh
 
 challenge_dependencies=$(lake env lean --src-deps Challenge.lean)
 while IFS= read -r dependency; do

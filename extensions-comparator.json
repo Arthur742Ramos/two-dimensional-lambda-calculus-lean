@@ -1,0 +1,25 @@
+{
+  "challenge_module": "ExtensionChallenge",
+  "solution_module": "Extensions",
+  "theorem_names": [
+    "TDLC.Syntax.representationAdequacy",
+    "TDLC.Syntax.eval_rename",
+    "TDLC.Syntax.eval_subst",
+    "TDLC.Syntax.eval_beta",
+    "TDLC.Syntax.eval_eta",
+    "TDLC.Syntax.interpret_parity",
+    "TDLC.Syntax.noCell_of_parity_ne",
+    "TDLC.Syntax.Example.endpointsDistinct",
+    "TDLC.Syntax.Example.routesDistinct",
+    "TDLC.Syntax.Example.interpretedRoutesSeparated",
+    "TDLC.Refutation.cell_preserves",
+    "TDLC.Refutation.path2_preserves",
+    "TDLC.Refutation.noBadStep2",
+    "TDLC.Refutation.noBadPath2",
+    "TDLC.Refutation.notStepNat",
+    "TDLC.Refutation.notNatPath"
+  ],
+  "definition_names": ["TDLC.Syntax.interpret"],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "enable_nanoda": true
+}

@@ -1,6 +1,6 @@
 name = "TwoDimensionalLambdaCalculus"
 version = "0.1.0"
-defaultTargets = ["TwoDimensionalLambdaCalculus", "Challenge", "Solution"]
+defaultTargets = ["TwoDimensionalLambdaCalculus", "Challenge", "Solution", "ExtensionChallenge", "Extensions"]
 
 [[lean_lib]]
 name = "TwoDimensionalLambdaCalculus"
@@ -13,3 +13,19 @@ roots = ["Challenge"]
 [[lean_lib]]
 name = "Solution"
 roots = ["Solution"]
+
+[[lean_lib]]
+name = "Syntax"
+roots = ["Syntax"]
+
+[[lean_lib]]
+name = "Refutation"
+roots = ["Refutation"]
+
+[[lean_lib]]
+name = "Extensions"
+roots = ["Extensions"]
+
+[[lean_lib]]
+name = "ExtensionChallenge"
+roots = ["ExtensionChallenge"]

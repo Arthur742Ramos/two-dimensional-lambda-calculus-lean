@@ -43,3 +43,4 @@ jobs:
           go-version: "1.24.0"
           cache: false
       - run: ./scripts/verify-comparator.sh
+      - run: ./scripts/verify-comparator.sh extensions-comparator.json

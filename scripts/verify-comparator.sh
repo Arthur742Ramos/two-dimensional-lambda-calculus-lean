@@ -2,6 +2,7 @@
 set -euo pipefail
 
 repository_root=$(cd "$(dirname "$0")/.." && pwd)
+config_file=${1:-comparator.json}
 cache_root=${PALOMAR_COMPARATOR_CACHE:-"$repository_root/.cache/palomar-comparator"}
 bin_dir="$cache_root/bin"
 comparator_dir="$cache_root/comparator"
@@ -20,7 +21,7 @@ for required_command in cargo git go lake python3; do
   fi
 done
 
-python3 - "$repository_root/comparator.json" <<'PY'
+python3 - "$repository_root/$config_file" <<'PY'
 import json
 import pathlib
 import sys
@@ -86,4 +87,4 @@ PALOMAR_LANDRUN_BIN="$bin_dir/landrun" \
 COMPARATOR_LEAN4EXPORT="$lean4export_dir/.lake/build/bin/lean4export" \
 COMPARATOR_NANODA="$nanoda_dir/target/release/nanoda_bin" \
 COMPARATOR_LANDRUN="$bin_dir/landrun" \
-  lake env "$comparator_dir/.lake/build/bin/comparator" comparator.json
+  lake env "$comparator_dir/.lake/build/bin/comparator" "$config_file"

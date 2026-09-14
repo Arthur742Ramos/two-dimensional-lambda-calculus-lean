@@ -14,6 +14,9 @@ project:
     subclass of pointwise families. Separately, Boolean parity is invariant
     under every cell and separates beta from eta evidence with common endpoints,
     yielding a nontrivial beta-eta loop.
+    Extensions add standalone typed de Bruijn syntax with representation
+    adequacy and a parity-preserving evidence interpretation, and an independent
+    classical refutation of unrestricted naturality by a dihedral-group invariant.
   authors:
     - "Arthur F. Ramos"
   license: "Apache-2.0"
@@ -46,13 +49,15 @@ status:
     Formalizes Definitions 2.1, 2.2, 3.1, 5.1, 5.2, 5.5, and 6.3; Theorems
     5.3 and 6.2; finite-presentation transport results corresponding to Proposition 6.4 and Theorems
     6.6 through 6.8; Theorem 7.3; Corollary 7.5; and its nontrivial-loop
-    consequence. It does not claim the manuscript's unrestricted-naturality
-    refutation, a standalone lambda syntax;
-    normalization or completeness; a semantic higher-lambda-model
+    consequence. Also proves unrestricted-naturality nonexistence through a new
+    classical invariant, rather than porting the claimed constructive Idris proof.
+    Adds standalone typed syntax, representation adequacy, substitution soundness,
+    and a parity-preserving conversion interpretation. Does not claim
+    normalization or denotational completeness; a semantic higher-lambda-model
     interpretation; an infinity-groupoid; or a fundamental-group calculation.
   sorry_count: 0
   sorry_in_definitions: 0
-  axioms: ["propext"]
+  axioms: ["propext", "Quot.sound", "Classical.choice"]
   main_results:
     - "TDLC.evalHomotopyStepI"
     - "TDLC.certifiedStepNaturality"
@@ -71,6 +76,14 @@ status:
     - "TDLC.path2PreservesParity"
     - "TDLC.betaEtaSeparated"
     - "TDLC.betaEtaLoopNontrivial"
+    - "TDLC.Syntax.representationAdequacy"
+    - "TDLC.Syntax.eval_subst"
+    - "TDLC.Syntax.interpret_parity"
+    - "TDLC.Syntax.Example.interpretedRoutesSeparated"
+    - "TDLC.Refutation.cell_preserves"
+    - "TDLC.Refutation.noBadPath2"
+    - "TDLC.Refutation.notStepNat"
+    - "TDLC.Refutation.notNatPath"
 
 automation:
   methods:
@@ -99,10 +112,13 @@ fidelity:
     and places inspectable evidence one universe higher. As in the manuscript's
     Idris host encoding, beta and eta make endpoint expressions definitionally
     equal in the host theory while preserving their constructor tags as data.
-    The paper's asserted Idris refutation of unrestricted semantic naturality
-    was not reconstructed from the PDF alone and is not claimed here. Instead,
-    Lean proves the independently checkable proper-subclass obstruction using
-    the evaluator's outer-constructor invariant. Transport and direct naturality
+    The new unrestricted-naturality refutation is a classical Lean proof via a
+    noncommutative invariant; it is not a port or verification of the claimed
+    constructive Idris proof, whose sources were not provided. Syntax.lean is
+    an additional standalone encoding. Its adequacy theorem concerns raw-tree
+    representation, not full abstraction or denotational completeness. The
+    interpretation preserves conversion parity and the displayed separation.
+    The core proper-subclass obstruction remains valid. Transport and direct naturality
     cover arbitrary finite global presentations. The transport comparison uses
     step naturality and is not an independent proof of it. No claim outside the stated scope is
     represented as a Lean theorem.
@@ -116,14 +132,37 @@ review:
     every evaluator branch and transport boundary, checked parity preservation
     case by case, kept the Palomar Challenge independent of candidate-local
     imports, and ran the repository verification scripts.
-    Lean's #print axioms reports no axioms for every selected declaration;
-    the Comparator export configuration permits propext because the exported
+    Lean's #print axioms reports no axioms for the 35 audited core declarations;
+    the core Comparator export configuration permits propext because the exported
     Lean environment declares it and NanoDa requires that declaration to be
     allowlisted.
+    The 17 extension declarations are audited separately against exactly the
+    standard propext, Quot.sound, and Classical.choice allowlist. Independent
+    Comparator/NanoDa configurations preserve this distinction.
 
 alignment:
   namespace: "TDLC"
   statements:
+    - source: "Additional Lean result: standalone syntax representation adequacy"
+      lean: "TDLC.Syntax.representationAdequacy"
+      module: "Syntax"
+      status: "proved"
+      note: "Exactly the extrinsically well-typed annotated raw trees have intrinsic representatives."
+    - source: "Additional Lean result: evidence interpretation"
+      lean: "TDLC.Syntax.interpret_parity"
+      module: "Syntax"
+      status: "proved"
+      note: "Syntactic conversions map to host evidence with the same structural parity."
+    - source: "Section 5 unrestricted-naturality refutation"
+      lean: "TDLC.Refutation.notStepNat"
+      module: "Refutation"
+      status: "proved"
+      note: "Independent classical proof; the manuscript's claimed constructivity is not verified."
+    - source: "Section 5 path-naturality refutation"
+      lean: "TDLC.Refutation.notNatPath"
+      module: "Refutation"
+      status: "proved"
+      note: "Rules out even finite Path2-valued naturality, hence also single-Step2-valued naturality."
     - source: "Theorem 5.3, canonical certified evaluation"
       lean: "TDLC.evalHomotopyStepI"
       module: "Solution"

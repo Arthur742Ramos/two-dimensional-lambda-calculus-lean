@@ -39,6 +39,26 @@ pasting identifies the two routes, despite their definitionally equal source
 and target. Their composite also gives a loop that cannot be connected to the
 empty path.
 
+## Standalone syntax and unrestricted naturality
+
+`Syntax.lean` adds a standalone simply typed de Bruijn calculus: object types,
+variables, application, abstraction, renaming, and capture-avoiding substitution.
+`representationAdequacy` proves that its terms represent exactly the annotated
+raw trees accepted by an independent extrinsic typing judgment. Substitution,
+beta, and eta are sound under interpretation. `interpret` maps labelled
+syntactic conversions to host `Step` evidence and preserves parity. A concrete
+beta/eta pair has provably distinct syntactic source and target, and its two
+interpreted routes remain unconnected by any host `Path2`.
+
+`Refutation.lean` proves the stronger negative result: `notStepNat` and
+`notNatPath` refute unrestricted naturality, even when arbitrary finite
+two-paths are allowed. The counterexample uses an identity function on `Fin 3`,
+a pointwise beta family, and a beta loop. A noncommutative dihedral-group
+invariant gives the two square boundaries different values while preserving
+every declared `Step2` constructor. This is an independent **classical** Lean
+proof, not a port or verification of the manuscript's claimed constructive
+Idris proof. See [PROOF_GUIDE.md](PROOF_GUIDE.md) for the construction and trust boundary.
+
 ## Scope
 
 The formalized results correspond to Definitions 2.1, 2.2, 3.1, 5.1, 5.2,
@@ -52,21 +72,18 @@ arbitrary semantic step families.
 This first Palomar entry does not claim normalization or completeness for a
 standalone lambda syntax, a semantic interpretation in higher lambda models,
 an infinity-groupoid, or a computation of the fundamental group of the circle.
-It does not yet port the claimed Idris refutation of unrestricted naturality, a full
-equality theory of `Path2`, or every named path-algebra lemma from Section 4.
-The PDF states the unrestricted-naturality refutation but does not include its
-proof or source; this repository therefore records only the narrower statement
-that has been independently reconstructed and checked in Lean: presented
-homotopies are a proper subclass of semantic pointwise families.
+It does not port the original Idris refutation proof, a full equality theory of
+`Path2`, or every named path-algebra lemma from Section 4. The standalone syntax
+and representation theorem are additional Lean results, not purported source
+theorems from the manuscript.
 
 In particular, `mixedUnitFamily` is not established as a counterexample to naturality: its
 failure to have a global presentation does not establish the absence of a
-two-cell. The stronger refutation remains an open reconstruction task here.
-Object terms are Lean values and functions, with beta/eta endpoints already
-definitionally equal. The theorem distinguishes their labelled evidence; it
-does not establish normalization or adequacy for an independently defined
-object-language syntax. Adding that syntax and an adequacy theorem would be
-a separate mathematical extension, not a correction of the present proof.
+two-cell. The actual refutation uses `Refutation.badFamily`, a different family.
+The core encoding still uses Lean values and functions. The standalone syntax
+does not: its representation adequacy and evidence interpretation are explicit.
+These results do not assert completeness of denotational equality for syntactic
+conversion, full abstraction, or a separate syntactic two-cell presentation.
 
 ## Build and verify
 
@@ -85,22 +102,33 @@ The Palomar surface is deliberately small:
   recursion.
 - `comparator.json` selects those declarations and permits only `propext`.
 - `formalization.yaml` records provenance, scope, fidelity, and automation.
+- `ExtensionChallenge.lean` is a second self-contained challenge for the new
+  syntax and refutation; `Extensions.lean` imports their proved modules.
+- `extensions-comparator.json` selects 17 extension declarations and explicitly
+  allows the standard axioms `propext`, `Quot.sound`, and `Classical.choice`.
 
-Lean's `#print axioms` reports no axiom dependencies for every selected
-construction and proof. The Comparator configuration nevertheless allowlists
+Lean's `#print axioms` reports no axiom dependencies for the 35 audited core
+constructions and proofs. The core Comparator configuration nevertheless allowlists
 `propext` because the exported Lean environment declares it and NanoDa requires
 every exported axiom declaration to be permitted.
 
 The complete Comparator and NanoDa replay is available through
 `./scripts/verify-comparator.sh`; it provisions exact pinned verifier revisions
 under `.cache/`, which is ignored by Git.
+Run `./scripts/verify-comparator.sh extensions-comparator.json` for the extension
+replay. CI runs both configurations. The extension audit separately checks the
+17 new selected declarations against the three named standard axioms; it does
+not describe them as axiom-free.
 
 Palomar submissions go through <https://submit.palomar-registry.org/>.
 
 ## Trust boundary
 
 All recorded evaluator, naturality, and transport values are ordinary
-computable Lean definitions; none is marked `noncomputable`. Lean checks the
+computable Lean definitions; none is marked `noncomputable`. The refutation's
+invariant and type-dependent marker are explicitly `noncomputable`, and its
+proof depends on classical choice. The syntax interpretation uses extensionality.
+No custom axioms or proof holes occur in the implementation. Lean checks the
 definitions and proofs relative to its kernel. The independent
 NanoDa replay checks the exported proof terms. Neither check validates the
 paper's broader philosophical discussion, the cited literature, or a semantic
