@@ -23,6 +23,7 @@
     "TDLC.certifiedStepNaturality",
     "TDLC.evalHomotopyPathI",
     "TDLC.certifiedPathNaturality",
+    "TDLC.transportAlongPresented",
     "TDLC.transportAlongPresentedRespects",
     "TDLC.certifiedTransport",
     "TDLC.recoverNaturalityFromTransport",

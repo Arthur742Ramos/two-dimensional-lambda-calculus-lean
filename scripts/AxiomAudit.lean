@@ -13,6 +13,7 @@ import Solution
 #print axioms TDLC.evalHomotopyPathI_nil
 #print axioms TDLC.evalHomotopyPathI_seq
 #print axioms TDLC.certifiedPathNaturality
+#print axioms TDLC.transportAlongPresented
 #print axioms TDLC.transportAlongPresentedRespects
 #print axioms TDLC.certifiedTransport
 #print axioms TDLC.recoverNaturalityFromTransport

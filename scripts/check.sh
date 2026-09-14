@@ -43,8 +43,8 @@ if [ "$challenge_lines" -gt 1000 ] || [ "$challenge_bytes" -gt 102400 ]; then
 fi
 
 challenge_holes=$(rg -c '^[[:space:]]*sorry[[:space:]]*$' Challenge.lean || true)
-if [ "$challenge_holes" -ne 23 ]; then
-  echo "Challenge.lean must contain exactly 23 deliberate declaration holes" >&2
+if [ "$challenge_holes" -ne 24 ]; then
+  echo "Challenge.lean must contain exactly 24 deliberate declaration holes" >&2
   exit 1
 fi
 
@@ -83,6 +83,7 @@ assert config == {
         "TDLC.certifiedStepNaturality",
         "TDLC.evalHomotopyPathI",
         "TDLC.certifiedPathNaturality",
+        "TDLC.transportAlongPresented",
         "TDLC.transportAlongPresentedRespects",
         "TDLC.certifiedTransport",
         "TDLC.recoverNaturalityFromTransport",

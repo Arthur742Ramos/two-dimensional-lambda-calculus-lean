@@ -58,6 +58,7 @@ status:
     - "TDLC.evalHomotopyStepI"
     - "TDLC.certifiedStepNaturality"
     - "TDLC.certifiedPathNaturality"
+    - "TDLC.transportAlongPresented"
     - "TDLC.transportAlongPresentedRespects"
     - "TDLC.certifiedTransport"
     - "TDLC.certifiedNaturalityViaTransport"

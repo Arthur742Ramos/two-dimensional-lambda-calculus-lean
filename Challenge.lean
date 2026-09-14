@@ -240,10 +240,8 @@ def certifiedPathNaturality {A B : Type u} {f g : A → B}
 /-- Conjugation transport along one canonically evaluated step presentation. -/
 def transportAlongPresented {A B : Type u} {f g : A → B}
     (e : HomotopyStepI f g) (x y : A) (q : Path (f x) (f y)) :
-    Path (g x) (g y) :=
-  let ev := evalHomotopyStepI e
-  Path.inv (Path.lEmbed (ev.family x)) ++ₚ
-    (q ++ₚ Path.lEmbed (ev.family y))
+    Path (g x) (g y) := by
+  sorry
 
 /-- Conjugation transport respects every finite two-path. -/
 def transportAlongPresentedRespects {A B : Type u} {f g : A → B}
