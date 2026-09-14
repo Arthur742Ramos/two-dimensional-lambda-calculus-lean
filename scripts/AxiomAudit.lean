@@ -18,6 +18,13 @@ import Solution
 #print axioms TDLC.certifiedTransport
 #print axioms TDLC.recoverNaturalityFromTransport
 #print axioms TDLC.certifiedNaturalityViaTransport
+#print axioms TDLC.transportAlongPathI
+#print axioms TDLC.transportAlongPathI_nil
+#print axioms TDLC.transportAlongPathI_seq
+#print axioms TDLC.transportAlongPathIRespects
+#print axioms TDLC.certifiedPathTransport
+#print axioms TDLC.recoverNaturalityFromPathTransport
+#print axioms TDLC.certifiedPathNaturalityViaTransport
 #print axioms TDLC.evaluatedHeadTagConstant
 #print axioms TDLC.semanticFamilyNotPresented
 #print axioms TDLC.Path.parity_lEmbed

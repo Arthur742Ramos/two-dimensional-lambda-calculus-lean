@@ -17,9 +17,12 @@ both a pointwise step family and naturality squares for every path. The
 construction is exposed by equations for reflexivity, beta, eta,
 postcomposition, symmetry, transitivity, and lambda congruence; it is not an
 unconstrained certificate field. Finite sequences of presentations have direct
-`Path2` naturality witnesses. Independently, conjugation transport respects
-two-paths, maps source congruence to target congruence, and reconstructs the
-same naturality boundary.
+`Path2` naturality witnesses. Recursive transport along arbitrary finite
+presentations respects two-paths, maps source congruence to target congruence,
+and reconstructs the same naturality boundary. Its comparison proof uses the
+step evaluator's naturality certificates: this is a derived transport theorem,
+not an independent proof of naturality. The nil and sequence equations fix the
+transport operation explicitly.
 
 The presentation restriction is mathematically visible. Every canonically
 evaluated step family has one uniform outer evidence constructor, while the
@@ -39,8 +42,9 @@ empty path.
 ## Scope
 
 The formalized results correspond to Definitions 2.1, 2.2, 3.1, 5.1, 5.2,
-5.5, and 6.3; Theorems 5.3 and 6.2; the one-presentation instances of
-Proposition 6.4 and Theorems 6.6–6.8; Theorem 7.3; and Corollary 7.5. The Lean
+5.5, and 6.3; Theorems 5.3 and 6.2; transport preservation, comparison, and
+recovery for finite presentations corresponding to Proposition 6.4 and
+Theorems 6.6–6.8; Theorem 7.3; and Corollary 7.5. The Lean
 development also formalizes the nontrivial-loop consequence discussed after
 Corollary 7.5 and a precise proper-subclass result separating presented from
 arbitrary semantic step families.
@@ -48,13 +52,21 @@ arbitrary semantic step families.
 This first Palomar entry does not claim normalization or completeness for a
 standalone lambda syntax, a semantic interpretation in higher lambda models,
 an infinity-groupoid, or a computation of the fundamental group of the circle.
-It does not yet port transport recursively along an arbitrary function-space
-presentation, the claimed Idris refutation of unrestricted naturality, a full
+It does not yet port the claimed Idris refutation of unrestricted naturality, a full
 equality theory of `Path2`, or every named path-algebra lemma from Section 4.
 The PDF states the unrestricted-naturality refutation but does not include its
 proof or source; this repository therefore records only the narrower statement
 that has been independently reconstructed and checked in Lean: presented
 homotopies are a proper subclass of semantic pointwise families.
+
+In particular, `mixedUnitFamily` is not a counterexample to naturality: its
+failure to have a global presentation does not establish the absence of a
+two-cell. The stronger refutation remains an open reconstruction task here.
+Object terms are Lean values and functions, with beta/eta endpoints already
+definitionally equal. The theorem distinguishes their labelled evidence; it
+does not establish normalization or adequacy for an independently defined
+object-language syntax. Adding that syntax and an adequacy theorem would be
+a separate mathematical extension, not a correction of the present proof.
 
 ## Build and verify
 

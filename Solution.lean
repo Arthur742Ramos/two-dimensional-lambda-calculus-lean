@@ -555,13 +555,78 @@ def recoverNaturalityFromTransport {A B : Type u} {f g : A → B}
       (.trans2 (Step2.assoc hx ihx source)
         (Step2.whiskL hx (Path2.toCell cells))))
 
-/-- Naturality reconstructed through the independently defined transport operation. -/
+/-- Naturality reconstructed through transport, whose comparison uses step naturality. -/
 def certifiedNaturalityViaTransport {A B : Type u} {f g : A → B}
     (e : HomotopyStepI f g) {x y : A} (p : Path x y) :
     Path2
       (Path.ap f p ++ₚ Path.lEmbed ((evalHomotopyStepI e).family y))
       (Path.lEmbed ((evalHomotopyStepI e).family x) ++ₚ Path.ap g p) :=
   recoverNaturalityFromTransport e (certifiedTransport e p)
+
+/-- Recursive transport along an arbitrary finite global presentation. -/
+def transportAlongPathI {A B : Type u} {f g : A → B} :
+    (hp : HomotopyPathI f g) → (x y : A) →
+    Path (f x) (f y) → Path (g x) (g y)
+  | .nil _, _, _, q => q
+  | .seq e hp, x, y, q =>
+      transportAlongPathI hp x y (transportAlongPresented e x y q)
+
+theorem transportAlongPathI_nil {A B : Type u} (f : A → B)
+    (x y : A) (q : Path (f x) (f y)) :
+    transportAlongPathI (.nil f) x y q = q := rfl
+
+theorem transportAlongPathI_seq {A B : Type u} {f g k : A → B}
+    (e : HomotopyStepI f g) (hp : HomotopyPathI g k)
+    (x y : A) (q : Path (f x) (f y)) :
+    transportAlongPathI (.seq e hp) x y q =
+      transportAlongPathI hp x y (transportAlongPresented e x y q) := rfl
+
+/-- Recursive transport preserves finite two-path witnesses. -/
+def transportAlongPathIRespects {A B : Type u} {f g : A → B} :
+    (hp : HomotopyPathI f g) → {x y : A} → {q r : Path (f x) (f y)} →
+    Path2 q r →
+    Path2 (transportAlongPathI hp x y q) (transportAlongPathI hp x y r)
+  | .nil _, _, _, _, _, cells => cells
+  | .seq e hp, _, _, _, _, cells =>
+      transportAlongPathIRespects hp (transportAlongPresentedRespects e cells)
+
+/-- The comparison is derived from step naturality, recursively over the presentation. -/
+def certifiedPathTransport {A B : Type u} {f g : A → B} :
+    (hp : HomotopyPathI f g) → {x y : A} → (p : Path x y) →
+    Path2 (transportAlongPathI hp x y (Path.ap f p)) (Path.ap g p)
+  | .nil _, _, _, p => .nil2 _
+  | .seq e hp, _, _, p =>
+      Path2.singleton (.trans2
+        (Path2.toCell (transportAlongPathIRespects hp (certifiedTransport e p)))
+        (Path2.toCell (certifiedPathTransport hp p)))
+
+/-- Recover a square from any comparison out of recursive transport. -/
+def recoverNaturalityFromPathTransport {A B : Type u} {f g : A → B} :
+    (hp : HomotopyPathI f g) → {x y : A} →
+    {q : Path (f x) (f y)} → {r : Path (g x) (g y)} →
+    Path2 (transportAlongPathI hp x y q) r →
+    Path2 (q ++ₚ evalHomotopyPathI hp y) (evalHomotopyPathI hp x ++ₚ r)
+  | .nil _, _, _, q, _, cells =>
+      Path2.singleton (.trans2 (Step2.rightId q) (Path2.toCell cells))
+  | .seq e hp, x, y, q, r, cells =>
+      let hx := Path.lEmbed ((evalHomotopyStepI e).family x)
+      let hy := Path.lEmbed ((evalHomotopyStepI e).family y)
+      let rx := evalHomotopyPathI hp x
+      let ry := evalHomotopyPathI hp y
+      let tq := transportAlongPresented e x y q
+      let first := Path2.toCell (recoverNaturalityFromTransport e (.nil2 tq))
+      let rest := Path2.toCell (recoverNaturalityFromPathTransport hp cells)
+      Path2.singleton (.trans2 (.sym2 (Step2.assoc q hy ry))
+        (.trans2 (.whiskR2 first ry)
+          (.trans2 (Step2.assoc hx tq ry)
+            (.trans2 (Step2.whiskL hx rest) (.sym2 (Step2.assoc hx rx r))))))
+
+/-- A transport-based reconstruction, not an independent proof of naturality. -/
+def certifiedPathNaturalityViaTransport {A B : Type u} {f g : A → B}
+    (hp : HomotopyPathI f g) {x y : A} (p : Path x y) :
+    Path2 (Path.ap f p ++ₚ evalHomotopyPathI hp y)
+      (evalHomotopyPathI hp x ++ₚ Path.ap g p) :=
+  recoverNaturalityFromPathTransport hp (certifiedPathTransport hp p)
 
 namespace Step
 

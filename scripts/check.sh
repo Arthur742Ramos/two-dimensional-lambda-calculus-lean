@@ -5,6 +5,7 @@ repository_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 cd "$repository_root"
 
 lake build
+lake env lean scripts/TransportTests.lean
 
 challenge_dependencies=$(lake env lean --src-deps Challenge.lean)
 while IFS= read -r dependency; do
@@ -43,8 +44,8 @@ if [ "$challenge_lines" -gt 1000 ] || [ "$challenge_bytes" -gt 102400 ]; then
 fi
 
 challenge_holes=$(rg -c '^[[:space:]]*sorry[[:space:]]*$' Challenge.lean || true)
-if [ "$challenge_holes" -ne 24 ]; then
-  echo "Challenge.lean must contain exactly 24 deliberate declaration holes" >&2
+if [ "$challenge_holes" -ne 31 ]; then
+  echo "Challenge.lean must contain exactly 31 deliberate declaration holes" >&2
   exit 1
 fi
 
@@ -73,6 +74,8 @@ assert config == {
         "TDLC.evalHomotopyPathI_seq",
         "TDLC.evaluatedHeadTagConstant",
         "TDLC.semanticFamilyNotPresented",
+        "TDLC.transportAlongPathI_nil",
+        "TDLC.transportAlongPathI_seq",
         "TDLC.step2PreservesParity",
         "TDLC.path2PreservesParity",
         "TDLC.betaEtaSeparated",
@@ -88,6 +91,11 @@ assert config == {
         "TDLC.certifiedTransport",
         "TDLC.recoverNaturalityFromTransport",
         "TDLC.certifiedNaturalityViaTransport",
+        "TDLC.transportAlongPathI",
+        "TDLC.transportAlongPathIRespects",
+        "TDLC.certifiedPathTransport",
+        "TDLC.recoverNaturalityFromPathTransport",
+        "TDLC.certifiedPathNaturalityViaTransport",
     ],
     "permitted_axioms": ["propext"],
     "enable_nanoda": True,

@@ -13,6 +13,8 @@
     "TDLC.evalHomotopyPathI_seq",
     "TDLC.evaluatedHeadTagConstant",
     "TDLC.semanticFamilyNotPresented",
+    "TDLC.transportAlongPathI_nil",
+    "TDLC.transportAlongPathI_seq",
     "TDLC.step2PreservesParity",
     "TDLC.path2PreservesParity",
     "TDLC.betaEtaSeparated",
@@ -27,7 +29,12 @@
     "TDLC.transportAlongPresentedRespects",
     "TDLC.certifiedTransport",
     "TDLC.recoverNaturalityFromTransport",
-    "TDLC.certifiedNaturalityViaTransport"
+    "TDLC.certifiedNaturalityViaTransport",
+    "TDLC.transportAlongPathI",
+    "TDLC.transportAlongPathIRespects",
+    "TDLC.certifiedPathTransport",
+    "TDLC.recoverNaturalityFromPathTransport",
+    "TDLC.certifiedPathNaturalityViaTransport"
   ],
   "permitted_axioms": ["propext"],
   "enable_nanoda": true

@@ -35,7 +35,7 @@ sources:
     note: >-
       The Lean development formalizes the labelled steps, paths, declared Step2
       generator set, canonical evaluator and its equations, certified naturality,
-      one-presentation transport and recovery, a proper-subclass obstruction,
+      finite-presentation transport and recovery, a proper-subclass obstruction,
       parity preservation, beta-eta separation, and the nontrivial-loop
       consequence from the manuscript dated 13 September 2026.
     license: "unknown"
@@ -44,11 +44,10 @@ sources:
 status:
   scope: >-
     Formalizes Definitions 2.1, 2.2, 3.1, 5.1, 5.2, 5.5, and 6.3; Theorems
-    5.3 and 6.2; one-presentation instances of Proposition 6.4 and Theorems
+    5.3 and 6.2; finite-presentation transport results corresponding to Proposition 6.4 and Theorems
     6.6 through 6.8; Theorem 7.3; Corollary 7.5; and its nontrivial-loop
     consequence. It does not claim the manuscript's unrestricted-naturality
-    refutation, recursive transport along arbitrary function-space
-    presentations, a standalone lambda syntax;
+    refutation, a standalone lambda syntax;
     normalization or completeness; a semantic higher-lambda-model
     interpretation; an infinity-groupoid; or a fundamental-group calculation.
   sorry_count: 0
@@ -62,6 +61,11 @@ status:
     - "TDLC.transportAlongPresentedRespects"
     - "TDLC.certifiedTransport"
     - "TDLC.certifiedNaturalityViaTransport"
+    - "TDLC.transportAlongPathI"
+    - "TDLC.transportAlongPathIRespects"
+    - "TDLC.certifiedPathTransport"
+    - "TDLC.recoverNaturalityFromPathTransport"
+    - "TDLC.certifiedPathNaturalityViaTransport"
     - "TDLC.semanticFamilyNotPresented"
     - "TDLC.step2PreservesParity"
     - "TDLC.path2PreservesParity"
@@ -98,9 +102,9 @@ fidelity:
     The paper's asserted Idris refutation of unrestricted semantic naturality
     was not reconstructed from the PDF alone and is not claimed here. Instead,
     Lean proves the independently checkable proper-subclass obstruction using
-    the evaluator's outer-constructor invariant. Transport is currently stated
-    for one canonically evaluated step presentation, while direct naturality
-    covers finite global presentations. No claim outside the stated scope is
+    the evaluator's outer-constructor invariant. Transport and direct naturality
+    cover arbitrary finite global presentations. The transport comparison uses
+    step naturality and is not an independent proof of it. No claim outside the stated scope is
     represented as a Lean theorem.
 
 review:
@@ -138,17 +142,18 @@ alignment:
       status: "proved"
       note: "Produces an explicit Path2 witness for every HomotopyPathI presentation."
     - source: "Proposition 6.4, transport respects two-paths"
-      lean: "TDLC.transportAlongPresentedRespects"
+      lean: "TDLC.transportAlongPathIRespects"
       module: "Solution"
       status: "proved"
-      note: "The recorded theorem is the one-presented-step conjugation instance."
+      note: "Recursive transport preserves two-paths for every finite global presentation."
     - source: "Theorems 6.6 through 6.8, transport and recovery"
-      lean: "TDLC.certifiedNaturalityViaTransport"
+      lean: "TDLC.certifiedPathNaturalityViaTransport"
       module: "Solution"
       status: "proved"
       note: >-
         Conjugation transport maps source congruence to target congruence and
-        recovers the naturality boundary for one canonical step presentation.
+        recovers the naturality boundary for arbitrary finite global presentations.
+        The comparison is derived from step naturality, not independent of it.
     - source: "Definition 5.1, presented versus semantic homotopies"
       lean: "TDLC.semanticFamilyNotPresented"
       module: "Solution"

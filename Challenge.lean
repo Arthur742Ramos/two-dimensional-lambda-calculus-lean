@@ -266,12 +266,58 @@ def recoverNaturalityFromTransport {A B : Type u} {f g : A → B}
       (Path.lEmbed ((evalHomotopyStepI e).family x) ++ₚ r) := by
   sorry
 
-/-- Naturality reconstructed independently through conjugation transport. -/
+/-- Naturality reconstructed through transport, whose comparison uses step naturality. -/
 def certifiedNaturalityViaTransport {A B : Type u} {f g : A → B}
     (e : HomotopyStepI f g) {x y : A} (p : Path x y) :
     Path2
       (Path.ap f p ++ₚ Path.lEmbed ((evalHomotopyStepI e).family y))
       (Path.lEmbed ((evalHomotopyStepI e).family x) ++ₚ Path.ap g p) := by
+  sorry
+
+/-- Recursive transport along an arbitrary finite global presentation. -/
+def transportAlongPathI {A B : Type u} {f g : A → B} :
+    (hp : HomotopyPathI f g) → (x y : A) →
+    Path (f x) (f y) → Path (g x) (g y) := by
+  sorry
+
+theorem transportAlongPathI_nil {A B : Type u} (f : A → B)
+    (x y : A) (q : Path (f x) (f y)) :
+    transportAlongPathI (.nil f) x y q = q := by
+  sorry
+
+theorem transportAlongPathI_seq {A B : Type u} {f g k : A → B}
+    (e : HomotopyStepI f g) (hp : HomotopyPathI g k)
+    (x y : A) (q : Path (f x) (f y)) :
+    transportAlongPathI (.seq e hp) x y q =
+      transportAlongPathI hp x y (transportAlongPresented e x y q) := by
+  sorry
+
+/-- Recursive transport preserves finite two-path witnesses. -/
+def transportAlongPathIRespects {A B : Type u} {f g : A → B} :
+    (hp : HomotopyPathI f g) → {x y : A} → {q r : Path (f x) (f y)} →
+    Path2 q r →
+    Path2 (transportAlongPathI hp x y q) (transportAlongPathI hp x y r) := by
+  sorry
+
+/-- The comparison is derived from step naturality, recursively over the presentation. -/
+def certifiedPathTransport {A B : Type u} {f g : A → B} :
+    (hp : HomotopyPathI f g) → {x y : A} → (p : Path x y) →
+    Path2 (transportAlongPathI hp x y (Path.ap f p)) (Path.ap g p) := by
+  sorry
+
+/-- Recover a square from any comparison out of recursive transport. -/
+def recoverNaturalityFromPathTransport {A B : Type u} {f g : A → B} :
+    (hp : HomotopyPathI f g) → {x y : A} →
+    {q : Path (f x) (f y)} → {r : Path (g x) (g y)} →
+    Path2 (transportAlongPathI hp x y q) r →
+    Path2 (q ++ₚ evalHomotopyPathI hp y) (evalHomotopyPathI hp x ++ₚ r) := by
+  sorry
+
+/-- A transport-based reconstruction, not an independent proof of naturality. -/
+def certifiedPathNaturalityViaTransport {A B : Type u} {f g : A → B}
+    (hp : HomotopyPathI f g) {x y : A} (p : Path x y) :
+    Path2 (Path.ap f p ++ₚ evalHomotopyPathI hp y)
+      (evalHomotopyPathI hp x ++ₚ Path.ap g p) := by
   sorry
 
 namespace Step
