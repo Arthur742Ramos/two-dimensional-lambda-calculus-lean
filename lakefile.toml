@@ -1,0 +1,15 @@
+name = "TwoDimensionalLambdaCalculus"
+version = "0.1.0"
+defaultTargets = ["TwoDimensionalLambdaCalculus", "Challenge", "Solution"]
+
+[[lean_lib]]
+name = "TwoDimensionalLambdaCalculus"
+roots = ["TwoDimensionalLambdaCalculus"]
+
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]

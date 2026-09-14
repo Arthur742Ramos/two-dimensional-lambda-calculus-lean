@@ -1,0 +1,13 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "TDLC.step2PreservesParity",
+    "TDLC.path2PreservesParity",
+    "TDLC.betaEtaSeparated",
+    "TDLC.betaEtaLoopNontrivial"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [],
+  "enable_nanoda": true
+}

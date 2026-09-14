@@ -1,0 +1,123 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Parity and beta-eta separation in a typed two-dimensional lambda calculus"
+  description: >-
+    A Lean 4 formalization of labelled conversion evidence and the complete
+    declared family of two-dimensional cell generators from A Theory of a
+    Two-Dimensional Typed Lambda Calculus. A Boolean structural parity is
+    proved invariant under every generating and composite two-cell and under
+    finite cell sequences. It follows that beta contraction and eta contraction
+    inside an application context remain distinct evidence with the same
+    endpoints, and that the resulting beta-eta loop is not connected to the
+    empty path.
+  authors:
+    - "Arthur F. Ramos"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Arthur F. Ramos"
+
+classification:
+  arxiv: ["math.LO"]
+  msc2020: ["03B40", "03B38"]
+
+sources:
+  - title: "A Theory of a Two-Dimensional Typed Lambda Calculus"
+    authors:
+      - "Daniel O. Martínez-Rivillas"
+      - "Arthur F. Ramos"
+      - "Ruy J. G. B. de Queiroz"
+    type: "paper"
+    relationship: "formalizes"
+    note: >-
+      The Lean development formalizes the labelled steps, paths, complete
+      declared Step2 generator set, parity-preservation theorem, beta-eta
+      separation, and nontrivial-loop consequence from the manuscript dated
+      13 September 2026.
+    license: "unknown"
+    author_endorsement: "participated"
+
+status:
+  scope: >-
+    Formalizes Definitions 2.1, 2.2, and 3.1, Theorem 7.3, Corollary 7.5,
+    and its nontrivial-loop consequence. It does not yet port the path-algebra,
+    certified-naturality, or transport constructions of Sections 4 through 6;
+    the refutation of unrestricted naturality; a standalone lambda syntax;
+    normalization or completeness; a semantic higher-lambda-model
+    interpretation; an infinity-groupoid; or a fundamental-group calculation.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+  main_results:
+    - "TDLC.step2PreservesParity"
+    - "TDLC.path2PreservesParity"
+    - "TDLC.betaEtaSeparated"
+    - "TDLC.betaEtaLoopNontrivial"
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["OpenAI GPT-6", "OpenAI GPT-5"]
+      framework: "OpenAI Codex"
+      tool_setup: >-
+        The agent translated the manuscript definitions into Lean, developed
+        the structural-induction proofs, prepared the Palomar boundary, and
+        ran local verification under human direction.
+      cost:
+        wall_time: "one interactive development session"
+        spend_usd: "subscription-based"
+        hardware: "local macOS machine and GitHub Actions"
+      prompting_notes: >-
+        The human supplied the manuscript, requested feasibility assessment,
+        and authorized creation of a public repository and formalization.
+  spend_usd: "subscription-based"
+  notes: >-
+    The mathematical source and Palomar scope were selected with the human;
+    Codex produced and checked the Lean implementation and repository package.
+
+fidelity:
+  divergences: >-
+    The Lean encoding keeps all object types in one universe level at a time
+    and places inspectable evidence one universe higher. As in the manuscript's
+    Idris host encoding, beta and eta make endpoint expressions definitionally
+    equal in the host theory while preserving their constructor tags as data.
+    No claim outside the stated scope is represented as a Lean theorem.
+
+review:
+  status: "agent-reviewed"
+  reviewers:
+    - "OpenAI Codex"
+  notes: >-
+    The agent audited every Step2 constructor against Definition 3.1, checked
+    parity preservation case by case, kept the Palomar Challenge independent
+    of candidate-local imports, and ran the repository verification scripts.
+
+alignment:
+  namespace: "TDLC"
+  statements:
+    - source: "Theorem 7.3, preservation by all 2-cells"
+      lean: "TDLC.step2PreservesParity"
+      module: "Solution"
+      status: "proved"
+      note: "Covers every constructor of the formalized Step2 family."
+    - source: "Theorem 7.3, preservation by Path2 sequences"
+      lean: "TDLC.path2PreservesParity"
+      module: "Solution"
+      status: "proved"
+      note: "Composes preservation along an explicit finite sequence of cells."
+    - source: "Corollary 7.5, beta and eta evidence are distinct"
+      lean: "TDLC.betaEtaSeparated"
+      module: "Solution"
+      status: "proved"
+      note: "States nonexistence of a Step2 witness for the selected common-source pair."
+    - source: "Corollary 7.5, beta-eta loop consequence"
+      lean: "TDLC.betaEtaLoopNontrivial"
+      module: "Solution"
+      status: "proved"
+      note: "States nonexistence of a Path2 witness from the loop to the empty path."
+
+acknowledgements: >-
+  The formalization follows the manuscript by Daniel O. Martínez-Rivillas,
+  Arthur F. Ramos, and Ruy J. G. B. de Queiroz and uses Lean 4, Comparator,
+  lean4export, NanoDa, Landrun, and the Palomar submission infrastructure.
